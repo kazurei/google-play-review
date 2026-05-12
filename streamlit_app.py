@@ -10,7 +10,7 @@ st.title("Google Play 大量レビュー収集")
 
 app_id = st.text_input(
     "アプリID",
-    value=st.imput()
+    value=st.input()
 )
 
 target_count = st.number_input(
