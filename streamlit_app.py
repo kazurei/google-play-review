@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-from google_play_scraper import reviews
+from google_play_scraper import reviews, Sort
 import time
 import os
 
@@ -54,6 +54,7 @@ if st.button("収集開始"):
                 country=country,
                 count=200,
                 continuation_token=continuation_token
+                sort=Sort.NEWEST,
             )
 
             if not result:
