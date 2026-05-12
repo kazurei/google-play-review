@@ -22,6 +22,10 @@ target_count = st.number_input(
 
 lang = st.selectbox("言語", ["ja", "en"], index=0)
 country = st.selectbox("国", ["jp", "us"], index=0)
+score_filter = st.selectbox(
+    "評価フィルタ",
+    ["すべて", "★1", "★2", "★3", "★4", "★5"]
+)
 
 if st.button("収集開始"):
 
