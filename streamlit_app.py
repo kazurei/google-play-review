@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-from google_play_scraper import reviews, Sort
+from google_play_scraper import reviews
 import time
 import os
 
@@ -9,8 +9,8 @@ st.set_page_config(page_title="大量レビュー収集", layout="wide")
 st.title("Google Play 大量レビュー収集")
 
 app_id = st.text_input(
-     "アプリID",
-    value="com.YostarJP.BlueArchive"
+    "アプリID",
+    value="jp.co.mixi.monsterstrike"
 )
 
 target_count = st.number_input(
@@ -23,10 +23,6 @@ target_count = st.number_input(
 
 lang = st.selectbox("言語", ["ja", "en"], index=0)
 country = st.selectbox("国", ["jp", "us"], index=0)
-score_filter = st.selectbox(
-    "評価フィルタ",
-    ["すべて", "★1", "★2", "★3", "★4", "★5"]
-)
 
 if st.button("収集開始"):
 
@@ -53,8 +49,7 @@ if st.button("収集開始"):
                 lang=lang,
                 country=country,
                 count=200,
-                continuation_token=continuation_token,
-                sort=Sort.NEWEST
+                continuation_token=continuation_token
             )
 
             if not result:
