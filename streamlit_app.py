@@ -9,7 +9,7 @@ st.set_page_config(page_title="大量レビュー収集", layout="wide")
 st.title("Google Play 大量レビュー収集")
 
 app_id = st.text_input(
-    
+    value="input"
 )
 
 target_count = st.number_input(
