@@ -53,8 +53,8 @@ if st.button("収集開始"):
                 lang=lang,
                 country=country,
                 count=200,
-                continuation_token=continuation_token
-                sort=Sort.NEWEST,
+                continuation_token=continuation_token,
+                sort=Sort.NEWEST
             )
 
             if not result:
