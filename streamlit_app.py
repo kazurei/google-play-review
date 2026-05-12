@@ -10,6 +10,7 @@ st.title("Google Play 大量レビュー収集")
 
 app_id = st.text_input(
     "input"
+    value="com.YostarJP.BlueArchive"
 )
 
 target_count = st.number_input(
