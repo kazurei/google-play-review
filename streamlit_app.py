@@ -9,7 +9,7 @@ st.set_page_config(page_title="大量レビュー収集", layout="wide")
 st.title("Google Play 大量レビュー収集")
 
 app_id = st.text_input(
-    "input"
+    
     value="com.YostarJP.BlueArchive"
 )
 
