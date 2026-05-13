@@ -12,7 +12,7 @@ st.write("Google Play Store のレビューを取得してCSV保存できます�
 # 入力欄
 app_id = st.text_input(
     "アプリID",
-    value="com.sega.pjsekai"
+    value="com.HoYoverse.Nap"
 )
 
 review_count = st.number_input(
