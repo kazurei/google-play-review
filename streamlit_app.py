@@ -23,11 +23,11 @@ review_count = st.number_input(
     step=1000
 )
 
-lang = st.selectbox(
-    "言語",
-    ["ja", "en", "ko"],
-    index=0
-)
+##lang = st.selectbox(
+##    "言語",
+##    ["ja", "en", "ko"],
+##    index=0
+##)
 
 ##country = st.selectbox(
 ##    "国",
@@ -54,7 +54,7 @@ if st.button("レビュー取得開始"):
 
             result, continuation_token = reviews(
                 app_id,
-                lang=lang,
+            ##    lang=lang,
             ##    country=country,
                 count=200,
                 continuation_token=continuation_token
