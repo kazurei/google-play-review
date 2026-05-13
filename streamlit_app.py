@@ -23,17 +23,17 @@ review_count = st.number_input(
     step=1000
 )
 
-##lang = st.selectbox(
-##    "言語",
-##    ["ja", "en", "ko"],
-##    index=0
-##)
+lang = st.selectbox(
+    "言語",
+    ["ja", "en", "ko"],
+    index=0
+)
 
-##country = st.selectbox(
-##    "国",
-##    ["jp", "us", "kr"],
-##    index=0
-##)
+country = st.selectbox(
+    "国",
+    ["jp", "us", "kr"],
+    index=0
+)
 
 score_filter = st.selectbox(
     "評価フィルタ",
