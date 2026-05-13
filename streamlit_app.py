@@ -54,8 +54,8 @@ if st.button("レビュー取得開始"):
 
             result, continuation_token = reviews(
                 app_id,
-            ##    lang=lang,
-            ##    country=country,
+                lang=lang,
+                country=country,
                 count=200,
                 continuation_token=continuation_token
             )
