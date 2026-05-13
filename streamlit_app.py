@@ -67,7 +67,7 @@ if st.button("レビュー取得開始"):
                     count=200,
                     continuation_token=continuation_token
                 )
-                print(continuation_token)
+
                 if not result:
                     break
 
