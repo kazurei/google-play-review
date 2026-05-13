@@ -1,13 +1,18 @@
 import streamlit as st
 import pandas as pd
-from google_play_scraper import reviews
+from google_play_scraper import reviews, Sort
 import time
 
-st.set_page_config(page_title="Google Play Review Scraper", layout="wide")
+st.set_page_config(
+    page_title="Google Play Review Scraper",
+    layout="wide"
+)
 
 st.title("Google Play レビュー取得ツール")
 
-st.write("Google Play Store のレビューを取得してCSV保存できます。")
+st.write(
+    "Google Play Store のレビューを取得してCSV保存できます。"
+)
 
 # 入力欄
 app_id = st.text_input(
@@ -23,18 +28,6 @@ review_count = st.number_input(
     step=1000
 )
 
-##lang = st.selectbox(
-##    "言語",
-##    ["ja", "en", "ko"],
-##    index=0
-##)
-
-##country = st.selectbox(
-##    "国",
-##    ["jp", "us", "kr"],
-##    index=0
-##)
-
 score_filter = st.selectbox(
     "評価フィルタ",
     ["すべて", "★1", "★2", "★3", "★4", "★5"]
@@ -44,33 +37,58 @@ score_filter = st.selectbox(
 if st.button("レビュー取得開始"):
 
     all_reviews = []
-    continuation_token = None
 
     progress_bar = st.progress(0)
     status_text = st.empty()
 
     try:
-        while len(all_reviews) < review_count:
 
-            result, continuation_token = reviews(
-                app_id,
-            ##    lang=lang,
-            ##    country=country,
-                count=200,
-                continuation_token=continuation_token
-            )
+        # 星ごとの取得設定
+        if score_filter == "すべて":
+            score_list = [1, 2, 3, 4, 5]
+        else:
+            score_list = [
+                int(score_filter.replace("★", ""))
+            ]
 
-            if not result:
-                break
+        # 星ごとにループ
+        for score in score_list:
 
-            all_reviews.extend(result)
+            continuation_token = None
 
-            progress = min(len(all_reviews) / review_count, 1.0)
-            progress_bar.progress(progress)
+            status_text.text(f"★{score} 取得中...")
 
-            status_text.text(f"{len(all_reviews)} 件取得")
+            while len(all_reviews) < review_count:
 
-            time.sleep(1)
+                result, continuation_token = reviews(
+                    app_id,
+                    sort=Sort.NEWEST,
+                    filter_score_with=score,
+                    count=200,
+                    continuation_token=continuation_token
+                )
+
+                if not result:
+                    break
+
+                all_reviews.extend(result)
+
+                progress = min(
+                    len(all_reviews) / review_count,
+                    1.0
+                )
+
+                progress_bar.progress(progress)
+
+                status_text.text(
+                    f"★{score} | "
+                    f"{len(all_reviews)} 件取得"
+                )
+
+                time.sleep(1)
+
+                if continuation_token is None:
+                    break
 
         # DataFrame化
         df = pd.DataFrame([{
@@ -82,17 +100,21 @@ if st.button("レビュー取得開始"):
             "appVersion": r["appVersion"]
         } for r in all_reviews])
 
-        # 評価フィルタ
-        if score_filter != "すべて":
-            score_num = int(score_filter.replace("★", ""))
-            df = df[df["score"] == score_num]
+        # 重複削除
+        df = df.drop_duplicates(
+            subset=["date", "content"]
+        )
 
-        st.success(f"{len(df)} 件取得完了")
+        st.success(
+            f"{len(df)} 件取得完了"
+        )
 
         st.dataframe(df)
 
         # CSVダウンロード
-        csv = df.to_csv(index=False).encode("utf-8-sig")
+        csv = df.to_csv(
+            index=False
+        ).encode("utf-8-sig")
 
         st.download_button(
             label="CSVダウンロード",
