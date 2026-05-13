@@ -29,11 +29,11 @@ lang = st.selectbox(
     index=0
 )
 
-country = st.selectbox(
-    "国",
-    ["jp", "us", "kr"],
-    index=0
-)
+##country = st.selectbox(
+##    "国",
+##    ["jp", "us", "kr"],
+##    index=0
+##)
 
 score_filter = st.selectbox(
     "評価フィルタ",
@@ -55,7 +55,7 @@ if st.button("レビュー取得開始"):
             result, continuation_token = reviews(
                 app_id,
                 lang=lang,
-                country=country,
+            ##    country=country,
                 count=200,
                 continuation_token=continuation_token
             )
